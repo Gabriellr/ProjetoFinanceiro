@@ -39,7 +39,7 @@ public class ConsultaLancamentoBean implements Serializable {
 
 	public void excluir(){
 		if(this.lancamentoSelecionado.isPago()){
-			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_ERROR, "Lancamento ja foi pago e nao pode ser excluido!");
+			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_ERROR, "Lancamento ja foi pago e não pode ser excluido!");
 		}else{
 		Session session = HibernateUtil.getSession();
 
@@ -51,7 +51,7 @@ public class ConsultaLancamentoBean implements Serializable {
 		this.inicializar();
 
 
-		FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_INFO, "Lancamento excluido com sucesso!");
+		FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_INFO, "Lançamento excluido com sucesso!");
 
 	}
 	}
