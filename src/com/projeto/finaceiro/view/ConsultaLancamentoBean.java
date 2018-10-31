@@ -28,32 +28,25 @@ public class ConsultaLancamentoBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void inicializar() {
-		Session session = HibernateUtil.getSession();
+		Session session = (Session) FacesUtil.getRequestAttribute("session");
 		this.lancamentos =session.createCriteria(Lancamento.class)
 				.addOrder(Order.desc("dataVencimento"))
 				.list();
-
-		session.close();
-
 	}
 
 	public void excluir(){
 		if(this.lancamentoSelecionado.isPago()){
 			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_ERROR, "Lancamento ja foi pago e não pode ser excluido!");
 		}else{
-		Session session = HibernateUtil.getSession();
-
-		Transaction trx = session.beginTransaction();
-
-		session.delete(this.lancamentoSelecionado);
-		trx.commit();
-		session.close();
-		this.inicializar();
+			Session session = (Session) FacesUtil.getRequestAttribute("session");
+			session.delete(this.lancamentoSelecionado);
+			
+			this.inicializar();
 
 
-		FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_INFO, "Lançamento excluido com sucesso!");
+			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_INFO, "Lançamento excluido com sucesso!");
 
-	}
+		}
 	}
 
 	public List<Lancamento> getLancamentos() {

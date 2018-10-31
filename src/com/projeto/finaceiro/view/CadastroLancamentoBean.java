@@ -8,8 +8,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -18,8 +20,10 @@ import org.hibernate.criterion.Order;
 import com.projeto.finaceiro.model.Lancamento;
 import com.projeto.finaceiro.model.Pessoa;
 import com.projeto.finaceiro.model.TipoLancamento;
+import com.projeto.finaceiro.util.FacesUtil;
 import com.projeto.finaceiro.util.HibernateUtil;
 
+@SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
 public class CadastroLancamentoBean implements Serializable {
@@ -27,10 +31,13 @@ public class CadastroLancamentoBean implements Serializable {
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	private Lancamento lancamento = new Lancamento();
 	
+	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void init(){
+		
+ Session session = (Session) FacesUtil.getRequestAttribute("session");
 	
-	Session session = HibernateUtil.getSession();
+	//Session session = HibernateUtil.getSession();
 		
 	this.pessoas = session.createCriteria(Pessoa.class)
 			.addOrder(Order.asc("nome"))
