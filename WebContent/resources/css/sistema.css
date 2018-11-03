@@ -1,7 +1,7 @@
 body {
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
-	margin: 8px;
+	margin: 0px;
 }
 
 a {
@@ -9,7 +9,7 @@ a {
 	color: #003399;
 }
 
-h1 {
+#content h1 {
 	background: url(../imagens/tela.png) no-repeat 0px 3px;
 	padding-left: 24px;
 	font-size: 20px;
@@ -71,4 +71,51 @@ ul.form-messages {
 
 .form-messages .info {
 	color: #156b2a;
+}
+
+#header, #content, #footer {
+	padding: 8px;
+}
+
+#header {
+	height: 43px;
+	background-color: #e2e2e2;
+	box-shadow: 0px 2px 2px #ccc;
+}
+
+#header h1 {
+	padding: 0px;
+	margin: 0px;
+}
+
+.logo {
+	float: left;
+}
+
+.menu {
+	margin-top: 30px;
+	float: right;
+}
+
+.menu a {
+	margin-left: 4px;
+	padding: 8px;
+	border-radius: 6px;
+	background-color: #4d4d4d;
+	color: #ffffff;
+	text-decoration: none;
+	text-shadow: 1px 1px 2px #000000; 
+}
+
+.menu a:hover {
+	background-color: #3c3c3c;
+	color: #eeeeee;
+	box-shadow: 0px 0px 5px #a6a6a6;
+}
+
+#footer {
+	font-size: 10px;
+	font-color: #9b9b9b;
+	margin-top: 10px;
+	border-top: 1px solid #cfcfcf;
 }

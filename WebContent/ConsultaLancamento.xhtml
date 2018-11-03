@@ -1,18 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
-	<h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Lançamentos</title>
-		
-		<h:outputStylesheet library="css" name="sistema.css"/>
+	
+	<ui:define name="titulo">Lançamentos</ui:define>
+	
+	<ui:define name="conteudo">
 		<h:outputStylesheet library="css" name="consulta-lancamentos.css"/>
-	</h:head>
-	<h:body>
-
+	
 		<h1>Lançamentos</h1>
 
 		<h:form id="frm">
@@ -96,10 +92,11 @@
 						<h:graphicImage value="/imagens/excluir.png"/>
 						<f:setPropertyActionListener target="#{consultaLancamentoBean.lancamentoSelecionado}" 
 							value="#{lancamento}"/>
-							<f:ajax render="@form"/>
+						<f:ajax render="@form" />
 					</h:commandLink>
 				</h:column>
 			</h:dataTable>
 		</h:form>
-	</h:body>
-</html>
+	</ui:define>
+	
+</ui:composition>
