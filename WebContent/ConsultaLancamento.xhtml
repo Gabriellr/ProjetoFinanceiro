@@ -88,7 +88,12 @@
 				</h:column>
 				
 				<h:column>
-					<h:graphicImage value="/imagens/editar.png"/>
+				 <h:link outcome="CadastroLancamento">
+				 <h:graphicImage value="/imagens/editar.png"/>
+				 <f:param name="codigo" value="#{lancamento.codigo}"/>
+				 </h:link>
+					
+					
 					<h:commandLink action="#{consultaLancamentoBean.excluir}">
 					<h:graphicImage value="/imagens/excluir.png"/>
 					<f:setPropertyActionListener target="#{consultaLancamentoBean.lancamentoSelecionado}" value="#{lancamento}" />
