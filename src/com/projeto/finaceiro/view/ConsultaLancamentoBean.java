@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedBean;
 
 import com.projeto.finaceiro.model.Lancamento;
 import com.projeto.finaceiro.repository.Lancamentos;
+import com.projeto.finaceiro.service.GestaoLancamentos;
+import com.projeto.finaceiro.service.RegraNegocioException;
 import com.projeto.finaceiro.util.FacesUtil;
 import com.projeto.finaceiro.util.Repositorios;
 
@@ -21,7 +23,7 @@ public class ConsultaLancamentoBean implements Serializable {
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	private Lancamento lancamentoSelecionado;
 
-	@SuppressWarnings("unchecked");
+	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void inicializar() {
 		Lancamentos lancamentos = this.repositorios.getLancamentos();
@@ -29,18 +31,17 @@ public class ConsultaLancamentoBean implements Serializable {
 	}
 
 	public void excluir(){
-		if(this.lancamentoSelecionado.isPago()){
-			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_ERROR, "Lancamento ja foi pago e não pode ser excluido!");
-		}else{
-			Lancamentos lancamentos = this.repositorios.getLancamentos();
-			lancamentos.remover(this.lancamentoSelecionado);
-
+		GestaoLancamentos gestaoLancamentos =  new GestaoLancamentos(this.repositorios.getLancamentos());
+		
+		try {
+			gestaoLancamentos.excluir(this.lancamentoSelecionado);
 			this.inicializar();
-
-
 			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_INFO, "Lançamento excluido com sucesso!");
 
+		} catch (RegraNegocioException e) {
+			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_ERROR, e.getLocalizedMessage());
 		}
+		
 	}
 
 	public List<Lancamento> getLancamentos() {
