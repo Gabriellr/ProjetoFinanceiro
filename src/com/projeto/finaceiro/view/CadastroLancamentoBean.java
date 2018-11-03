@@ -14,15 +14,12 @@ import javax.faces.event.ValueChangeEvent;
 import com.projeto.finaceiro.model.Lancamento;
 import com.projeto.finaceiro.model.Pessoa;
 import com.projeto.finaceiro.model.TipoLancamento;
-import com.projeto.finaceiro.repository.Lancamentos;
 import com.projeto.finaceiro.repository.Pessoas;
 import com.projeto.finaceiro.service.GestaoLancamentos;
 import com.projeto.finaceiro.service.RegraNegocioException;
 import com.projeto.finaceiro.util.FacesUtil;
 import com.projeto.finaceiro.util.Repositorios;
-import com.sun.prism.impl.BaseMesh.FaceMembers;
 
-@SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
 public class CadastroLancamentoBean implements Serializable {
@@ -31,33 +28,35 @@ public class CadastroLancamentoBean implements Serializable {
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	private Lancamento lancamento = new Lancamento();
 
-	@SuppressWarnings("unchecked")
 	@PostConstruct
-	public void init(){
-
+	public void init() {
 		Pessoas pessoas = this.repositorios.getPessoas();
 		this.pessoas = pessoas.todas();
-
 	}
-	public void lancamentoPagoModificado(ValueChangeEvent event){
-		this.lancamento.setPago((Boolean)event.getNewValue());
+	
+	public void lancamentoPagoModificado(ValueChangeEvent event) {
+		this.lancamento.setPago((Boolean) event.getNewValue());
 		this.lancamento.setDataPagamento(null);
 		FacesContext.getCurrentInstance().renderResponse();
 	}
-
-	public void cadastrar() {
-		GestaoLancamentos gestaoLancamentos=  new GestaoLancamentos(this.repositorios.getLancamentos());
+	
+	public void salvar() {
+		GestaoLancamentos gestaoLancamentos = new GestaoLancamentos(this.repositorios.getLancamentos());
 		try {
-			gestaoLancamentos.salvar(this.lancamento);
+			gestaoLancamentos.salvar(lancamento);
+			
 			this.lancamento = new Lancamento();
-			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_INFO, "Cadastro efetuado com sucesso!");
+			
+			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_INFO, "Lançamento salvo com sucesso!");
 		} catch (RegraNegocioException e) {
-			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_ERROR, e.getMessage());
-		
+			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_ERROR, e.getMessage());
 		}
-
 	}
-
+	
+	public boolean isEditando() {
+		return this.lancamento.getCodigo() != null;
+	}
+	
 	public TipoLancamento[] getTiposLancamentos() {
 		return TipoLancamento.values();
 	}
@@ -65,12 +64,18 @@ public class CadastroLancamentoBean implements Serializable {
 	public Lancamento getLancamento() {
 		return lancamento;
 	}
-	public void setLancamento(Lancamento lancamento){
+	
+	public void setLancamento(Lancamento lancamento) throws CloneNotSupportedException {
 		this.lancamento = lancamento;
+		if (this.lancamento == null) {
+			this.lancamento = new Lancamento();
+		} else {
+			this.lancamento = (Lancamento) lancamento.clone();
+		}
 	}
 
-	public List<Pessoa> getPessoa() {
+	public List<Pessoa> getPessoas() {
 		return pessoas;
 	}
-
+	
 }

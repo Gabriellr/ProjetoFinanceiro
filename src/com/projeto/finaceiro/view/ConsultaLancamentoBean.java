@@ -15,6 +15,7 @@ import com.projeto.finaceiro.service.RegraNegocioException;
 import com.projeto.finaceiro.util.FacesUtil;
 import com.projeto.finaceiro.util.Repositorios;
 
+
 @SuppressWarnings("serial")
 @ManagedBean
 public class ConsultaLancamentoBean implements Serializable {
@@ -22,28 +23,26 @@ public class ConsultaLancamentoBean implements Serializable {
 	private Repositorios repositorios = new Repositorios();
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	private Lancamento lancamentoSelecionado;
-
-	@SuppressWarnings("unchecked")
+	
 	@PostConstruct
 	public void inicializar() {
 		Lancamentos lancamentos = this.repositorios.getLancamentos();
 		this.lancamentos = lancamentos.todos();
 	}
 
-	public void excluir(){
-		GestaoLancamentos gestaoLancamentos =  new GestaoLancamentos(this.repositorios.getLancamentos());
-		
+	public void excluir() {
+		GestaoLancamentos gestaoLancamentos = new GestaoLancamentos(this.repositorios.getLancamentos());
 		try {
 			gestaoLancamentos.excluir(this.lancamentoSelecionado);
+			
 			this.inicializar();
-			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_INFO, "Lançamento excluido com sucesso!");
-
+			
+			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_INFO, "Lançamento excluido com sucesso!");
 		} catch (RegraNegocioException e) {
-			FacesUtil.addicionarMensagem(FacesMessage.SEVERITY_ERROR, e.getLocalizedMessage());
+			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_ERROR, e.getMessage());
 		}
-		
 	}
-
+	
 	public List<Lancamento> getLancamentos() {
 		return lancamentos;
 	}
@@ -55,5 +54,5 @@ public class ConsultaLancamentoBean implements Serializable {
 	public void setLancamentoSelecionado(Lancamento lancamentoSelecionado) {
 		this.lancamentoSelecionado = lancamentoSelecionado;
 	}
-
+	
 }
