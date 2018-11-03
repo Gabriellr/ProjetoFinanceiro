@@ -21,7 +21,7 @@ public class ConsultaLancamentoBean implements Serializable {
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	private Lancamento lancamentoSelecionado;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked");
 	@PostConstruct
 	public void inicializar() {
 		Lancamentos lancamentos = this.repositorios.getLancamentos();
