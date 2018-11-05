@@ -1,0 +1,136 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.5.24
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema cursojsf
+--
+
+CREATE DATABASE IF NOT EXISTS cursojsf;
+USE cursojsf;
+
+--
+-- Definition of table `lancamento`
+--
+
+DROP TABLE IF EXISTS `lancamento`;
+CREATE TABLE `lancamento` (
+  `codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(20) NOT NULL,
+  `codigo_pessoa` int(11) NOT NULL,
+  `descricao` varchar(100) NOT NULL,
+  `valor` decimal(10,2) NOT NULL,
+  `data_vencimento` date NOT NULL,
+  `pago` bit(1) NOT NULL,
+  `data_pagamento` date DEFAULT NULL,
+  PRIMARY KEY (`codigo`),
+  KEY `codigo_pessoa` (`codigo_pessoa`),
+  CONSTRAINT `lancamento_ibfk_1` FOREIGN KEY (`codigo_pessoa`) REFERENCES `pessoa` (`codigo`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `lancamento`
+--
+
+/*!40000 ALTER TABLE `lancamento` DISABLE KEYS */;
+INSERT INTO `lancamento` (`codigo`,`tipo`,`codigo_pessoa`,`descricao`,`valor`,`data_vencimento`,`pago`,`data_pagamento`) VALUES 
+ (2,'DESPESA',1,'dfd','54.00','2014-01-12',0x00,NULL),
+ (6,'DESPESA',6,'Teste Lancamento','12.00','2014-01-12',0x01,'2018-11-05');
+/*!40000 ALTER TABLE `lancamento` ENABLE KEYS */;
+
+
+--
+-- Definition of table `permissao_usuario`
+--
+
+DROP TABLE IF EXISTS `permissao_usuario`;
+CREATE TABLE `permissao_usuario` (
+  `nome_usuario` varchar(15) NOT NULL,
+  `nome_permissao` varchar(15) NOT NULL,
+  PRIMARY KEY (`nome_usuario`,`nome_permissao`),
+  CONSTRAINT `permissao_usuario_ibfk_1` FOREIGN KEY (`nome_usuario`) REFERENCES `usuario` (`nome_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `permissao_usuario`
+--
+
+/*!40000 ALTER TABLE `permissao_usuario` DISABLE KEYS */;
+INSERT INTO `permissao_usuario` (`nome_usuario`,`nome_permissao`) VALUES 
+ ('joao','cadastro'),
+ ('maria','consulta'),
+ ('sebastiao','cadastro'),
+ ('sebastiao','consulta');
+/*!40000 ALTER TABLE `permissao_usuario` ENABLE KEYS */;
+
+
+--
+-- Definition of table `pessoa`
+--
+
+DROP TABLE IF EXISTS `pessoa`;
+CREATE TABLE `pessoa` (
+  `codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pessoa`
+--
+
+/*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
+INSERT INTO `pessoa` (`codigo`,`nome`) VALUES 
+ (1,'João das Couves'),
+ (2,'Tchau Telecom'),
+ (3,'Pastelaria 99'),
+ (4,'Panificadora do José'),
+ (5,'Mercado Preço Bom'),
+ (6,'Java ee');
+/*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
+
+
+--
+-- Definition of table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+CREATE TABLE `usuario` (
+  `nome_usuario` varchar(15) NOT NULL,
+  `senha` varchar(32) NOT NULL,
+  PRIMARY KEY (`nome_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usuario`
+--
+
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` (`nome_usuario`,`senha`) VALUES 
+ ('joao','dccd96c256bc7dd39bae41a405f25e43'),
+ ('maria','263bce650e68ab4e23f28263760b9fa5'),
+ ('sebastiao','2b492cc70ad15ad496389e4d2ef4e8d2');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
