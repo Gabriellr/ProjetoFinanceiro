@@ -2,7 +2,8 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:aw="http://java.sun.com/jsf/composite/component">
 	
 	<ui:define name="titulo">Lançamentos</ui:define>
 	
@@ -12,7 +13,8 @@
 		<h1>Lançamentos</h1>
 
 		<h:form id="frm">
-			<h:button value="Novo lançamento" outcome="CadastroLancamento" />
+			<h:button value="Novo lançamento" outcome="CadastroLancamento"
+			rendered="#{request.isUserInRole('cadastro')}"/>
 
 			<h:messages showDetail="false" showSummary="true" 
 				styleClass="form-messages" errorClass="error"
@@ -47,10 +49,9 @@
 					<f:facet name="header">
 						Valor
 					</f:facet>
-				
-					<h:outputText value="#{lancamento.valor}" styleClass="#{lancamento.tipo.toString().toLowerCase()}">
-						<f:convertNumber locale="pt_BR" currencySymbol="R$" type="currency"/>
-					</h:outputText>
+									
+					
+					<aw:outputValorLancamento lancamentoBean ="#{lancamento}"/>
 				</h:column>
 			
 				<h:column>
@@ -82,7 +83,7 @@
 					<h:outputText value="Aberto" rendered="#{not lancamento.pago}"/>
 				</h:column>
 				
-				<h:column>
+				<h:column rendered="#{request.isUserInRole('cadastro')}">
 					<h:link outcome="CadastroLancamento">
 						<h:graphicImage value="/imagens/editar.png"/>
 						<f:param name="codigo" value="#{lancamento.codigo}"/>

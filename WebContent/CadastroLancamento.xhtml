@@ -21,7 +21,8 @@
 		<h:form id="frm">
 		
 			<h:button value="Novo" outcome="CadastroLancamento" />
-			<h:button value="Consulta" outcome="ConsultaLancamento" />
+			<h:button value="Consulta" outcome="ConsultaLancamento" 
+			rendered="#{request.isUserInRole('consulta')}"/>
 
 			<h:messages showDetail="false" showSummary="true" 
 				styleClass="form-messages" errorClass="error"

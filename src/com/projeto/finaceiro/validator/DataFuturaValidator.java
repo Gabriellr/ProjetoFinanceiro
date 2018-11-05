@@ -9,6 +9,8 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+import com.projeto.finaceiro.util.FacesUtil;
+
 
 
 @FacesValidator("com.projeto.DataFutura")
@@ -21,7 +23,7 @@ public class DataFuturaValidator  implements Validator{
 		if (data != null && data.after(new Date())) {
 			Object label = "Data pagamento";
 			
-			String descricaoErro = label + " n√o pode ser uma data futura.";
+			String descricaoErro = label + FacesUtil.getMensagemI18n("cannot_be_a_future_date");
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					descricaoErro, descricaoErro);
 			throw new ValidatorException(message);
